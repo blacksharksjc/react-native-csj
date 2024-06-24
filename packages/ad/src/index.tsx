@@ -1,20 +1,33 @@
-import { NativeModules, Platform } from 'react-native';
+import Native from './native';
 
-const LINKING_ERROR =
-  `The package '@rn-csj/ad' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo managed workflow\n';
+/**
+ * 初始化广告引擎
+ * @returns
+ */
+export function init(appId: string, appName: string): Promise<void> {
+  return Native.init(appId, appName);
+}
 
-const Ad = NativeModules.Ad  ? NativeModules.Ad  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
+/**
+ * 加载开屏广告
+ * @returns
+ */
+export function loadSplashScreen(code: string): Promise<void> {
+  return Native.loadSplashScreen(code);
+}
 
-export function multiply(a: number, b: number): Promise<number> {
-  return Ad.multiply(a, b);
+/**
+ * 加载激励视频
+ * @returns
+ */
+export function loadRewardAd(code: string): Promise<number> {
+  return Native.loadRewardAd(code);
+}
+
+/**
+ * 请求必要权限
+ * @returns
+ */
+export function requestPermissionIfNecessary(): void {
+  return Native.requestPermissionIfNecessary();
 }

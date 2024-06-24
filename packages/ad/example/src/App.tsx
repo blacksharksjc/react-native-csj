@@ -1,18 +1,13 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from '@rn-csj/ad';
+import {StyleSheet, View, Button} from 'react-native';
+import {loadRewardAd} from "@rn-csj/ad";
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Button title={'加载激励视频'} onPress={() => loadRewardAd('901121593')} />
     </View>
   );
 }
