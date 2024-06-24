@@ -1,0 +1,14 @@
+{
+  "name": "rn-csj",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": ["**/*"]
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
