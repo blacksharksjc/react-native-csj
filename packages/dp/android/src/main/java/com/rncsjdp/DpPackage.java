@@ -1,5 +1,7 @@
 package com.rncsjdp;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.facebook.react.ReactPackage;
@@ -28,6 +30,6 @@ public class DpPackage implements ReactPackage {
     List<ViewManager> managers = new ArrayList<>();
     managers.add(new DPGridViewManager(reactContext));
     managers.add(new DPDrawViewManager(reactContext));
-    return Collections.emptyList();
+    return managers;
   }
 }
