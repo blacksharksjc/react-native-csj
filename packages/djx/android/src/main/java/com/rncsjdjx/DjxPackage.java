@@ -6,6 +6,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.rncsjdjx.views.DJXDrawHomeViewManager;
+import com.rncsjdjx.views.DJXDrawViewManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +25,9 @@ public class DjxPackage implements ReactPackage {
     @NonNull
     @Override
     public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
-        return Collections.emptyList();
+      List<ViewManager> managers = new ArrayList<>();
+      managers.add(new DJXDrawViewManager(reactContext));
+      managers.add(new DJXDrawHomeViewManager(reactContext));
+      return managers;
     }
 }

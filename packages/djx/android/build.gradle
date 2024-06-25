@@ -125,6 +125,17 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
+  implementation 'com.pangle.cn:ads-sdk-pro:5.6.1.5'
+  implementation 'com.pangle.cn:pangrowth-djx-sdk:1.1.6.0'
+  implementation ('com.pangle.cn:pangrowth-sdk:4.1.1.0'){
+    exclude group: 'com.pangle.cn', module: 'partner-live-sdk'
+    exclude group: 'com.pangle.cn', module: 'pangrowth-novel-sdk'
+    exclude group: 'com.pangle.cn', module: 'pangrowth-game-sdk'
+    exclude group: 'com.pangle.cn', module: 'pangrowth-luckycat-sdk'
+    exclude group: 'com.pangle.cn', module: 'pangrowth-reward-sdk'
+    exclude group: 'com.pangle.cn', module: 'partner-luckycat-api-sdk'
+    exclude group: 'com.pangle.cn', module: 'pangrowth-luckycat-api'
+  }
 // From node_modules
 }
 
