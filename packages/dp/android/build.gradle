@@ -125,6 +125,7 @@ repositories {
 dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
+  implementation 'com.pangle.cn:pangrowth-djx-sdk:1.1.6.0'
   implementation ('com.pangle.cn:pangrowth-sdk:4.1.1.0'){
    exclude group: 'com.pangle.cn', module: 'partner-live-sdk'
    exclude group: 'com.pangle.cn', module: 'pangrowth-novel-sdk'

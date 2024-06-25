@@ -3,15 +3,15 @@ import * as React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {useEffect} from "react";
 import {init as initAdSdk} from "@rn-csj/ad";
-import {init as initDpSDK} from "@rn-csj/dp";
-import {DPDrawView} from "../../src/views";
+import {init as initDjxSdk} from "@rn-csj/djx";
+import {DPDrawView, init as initDpSDK} from "@rn-csj/dp";
 
 const { width, height } = Dimensions.get('window');
 export default function App() {
   const [ready, setReady] = React.useState(false);
 
   useEffect(() => {
-    initAdSdk('5001121', 'APP测试媒体').then(initDpSDK).then(() => {setReady(true)});
+    initAdSdk('5434881', 'djxsdk_demo').then(initDjxSdk).then(initDpSDK).then(() => {setReady(true)});
   }, []);
 
   if (!ready) {
