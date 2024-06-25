@@ -1,18 +1,26 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from '@rn-csj/dp';
+import {Dimensions, StyleSheet, View} from 'react-native';
+import {useEffect} from "react";
+import {init as initAdSdk} from "@rn-csj/ad";
+import {init as initDpSDK} from "@rn-csj/dp";
+import {DPDrawView} from "../../src/views";
 
+const { width, height } = Dimensions.get('window');
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [ready, setReady] = React.useState(false);
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+  useEffect(() => {
+    initAdSdk('5001121', 'APP测试媒体').then(initDpSDK).then(() => {setReady(true)});
   }, []);
+
+  if (!ready) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <DPDrawView style={{width, height}}/>
     </View>
   );
 }

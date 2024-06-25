@@ -1,20 +1,9 @@
-import { NativeModules, Platform } from 'react-native';
+import Native from './native';
 
-const LINKING_ERROR =
-  `The package '@rn-csj/dp' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo managed workflow\n';
-
-const Dp = NativeModules.Dp  ? NativeModules.Dp  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
-
-export function multiply(a: number, b: number): Promise<number> {
-  return Dp.multiply(a, b);
+/**
+ * 初始化广告引擎
+ * @returns
+ */
+export function init(): Promise<void> {
+  return Native.init();
 }
