@@ -7,7 +7,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.module.annotations.ReactModule;
-import com.rncsjdjx.config.DPHolder;
+import com.rncsjdjx.config.DJXHolder;
 
 @ReactModule(name = DjxModule.NAME)
 public class DjxModule extends ReactContextBaseJavaModule {
@@ -26,6 +26,6 @@ public class DjxModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void init(Promise promise) {
-    DPHolder.init(this.getReactApplicationContext(), promise);
+    DJXHolder.init(this.getReactApplicationContext(), promise);
   }
 }

@@ -1,18 +1,25 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from '@rn-csj/djx';
+import { StyleSheet, View } from 'react-native';
+import {init as initAdSdk} from "@rn-csj/ad";
+import {init as initDjxSdk} from "@rn-csj/djx";
+import {useEffect} from "react";
+import {DJXDrawHomeView} from "../../src/views";
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [ready, setReady] = React.useState(false);
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+  useEffect(() => {
+    initAdSdk('5434881', 'djxsdk_demo').then(initDjxSdk).then(() => {setReady(true)});
   }, []);
+
+  if (!ready) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <DJXDrawHomeView />
     </View>
   );
 }
