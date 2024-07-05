@@ -1,11 +1,20 @@
 import Native from './native';
+import { type CsjInitOption, NetworkType, TitleBarTheme } from './types';
 
 /**
  * 初始化广告引擎
  * @returns
  */
-export function init(appId: string, appName: string): Promise<void> {
-  return Native.init(appId, appName);
+export function init(option: CsjInitOption): Promise<void> {
+  const optionWithDefault = {
+    debug: true,
+    useTextureView: true,
+    titleBarTheme: TitleBarTheme.TITLE_BAR_THEME_LIGHT,
+    directDownloadNetworkType: NetworkType.NETWORK_STATE_WIFI,
+    allowShowNotify: true,
+    ...option,
+  }
+  return Native.init(optionWithDefault);
 }
 
 /**
