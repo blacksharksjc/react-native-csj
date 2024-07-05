@@ -43,3 +43,8 @@ export enum NetworkType {
   NETWORK_STATE_4G = 5,
   NETWORK_STATE_5G = 6,
 }
+
+export enum AdEvent {
+  AD_START_SUCCESS = "AD_START_SUCCESS",
+  AD_START_FAIL = "AD_START_FAIL",
+}

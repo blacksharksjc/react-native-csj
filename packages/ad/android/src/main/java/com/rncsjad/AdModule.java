@@ -21,18 +21,18 @@ import java.util.Objects;
 
 @ReactModule(name = AdModule.NAME)
 public class AdModule extends ReactContextBaseJavaModule {
-    public static final String NAME = "Ad";
+  public static final String NAME = "Ad";
   public static final String TAG = LogUtils.createLogTag(NAME);
 
-    public AdModule(ReactApplicationContext reactContext) {
-        super(reactContext);
-    }
+  public AdModule(ReactApplicationContext reactContext) {
+    super(reactContext);
+  }
 
-    @Override
-    @NonNull
-    public String getName() {
-        return NAME;
-    }
+  @Override
+  @NonNull
+  public String getName() {
+    return NAME;
+  }
 
 
   @ReactMethod
@@ -58,7 +58,7 @@ public class AdModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void loadRewardAd(String code,Promise promise) {
+  public void loadRewardAd(String code, Promise promise) {
     Log.d(TAG, "loadRewardAd code: " + code);
     RewardAd.loadRewardAd(code, Objects.requireNonNull(this.getCurrentActivity()), promise);
   }
@@ -66,6 +66,16 @@ public class AdModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void requestPermissionIfNecessary() {
     TTAdSdk.getAdManager().requestPermissionIfNecessary(this.getReactApplicationContext());
+  }
+
+  @ReactMethod
+  public void addListener(String eventName) {
+    // Keep: Required for RN built in Event Emitter Calls.
+  }
+
+  @ReactMethod
+  public void removeListeners(double count) {
+    // Keep: Required for RN built in Event Emitter Calls.
   }
 
 }

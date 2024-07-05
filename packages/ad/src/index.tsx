@@ -1,5 +1,6 @@
 import Native from './native';
 import { type CsjInitOption, NetworkType, TitleBarTheme } from './types';
+import { NativeEventEmitter } from 'react-native';
 
 /**
  * 初始化广告引擎
@@ -39,4 +40,15 @@ export function loadRewardAd(code: string): Promise<number> {
  */
 export function requestPermissionIfNecessary(): void {
   return Native.requestPermissionIfNecessary();
+}
+
+const eventEmitter = new NativeEventEmitter(Native);
+
+/**
+ * 添加事件监听
+ * @param eventName
+ * @param listener
+ */
+export function addEventListener<T extends (event: any) => void>(eventName: string, listener: T) {
+  return eventEmitter.addListener(eventName, listener);
 }

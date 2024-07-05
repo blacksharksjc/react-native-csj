@@ -1,12 +1,21 @@
 package com.rncsjad.config;
 
+import static com.rncsjad.constant.AdInitEvent.AD_START_SUCCESS;
+
 import android.content.Context;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.bytedance.sdk.openadsdk.TTAdConfig;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.rncsjad.constant.AdInitEvent;
 import com.rncsjad.options.CsjAdInitOption;
 import com.rncsjad.utils.LogUtils;
 
@@ -15,7 +24,7 @@ public class TTAdManagerHolder {
   private static boolean sInit;
   private static boolean sStart;
 
-  public static void init(final Context context, CsjAdInitOption option, Promise promise) {
+  public static void init(final ReactContext context, CsjAdInitOption option, Promise promise) {
     if (sInit) {
       Log.d(TAG, "SDK已初始化");
       promise.resolve(null);
@@ -35,6 +44,8 @@ public class TTAdManagerHolder {
       public void success() {
         Log.d(TAG, "SDK启动成功");
 
+        sendEvent(context, AD_START_SUCCESS.name(), Arguments.createMap());
+
         sStart = true;
         promise.resolve(null);
       }
@@ -46,6 +57,14 @@ public class TTAdManagerHolder {
         promise.reject(String.valueOf(i), s);
       }
     });
+  }
+
+  private static void sendEvent(ReactContext reactContext,
+                                String eventName,
+                                @Nullable WritableMap params) {
+    reactContext
+      .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+      .emit(eventName, params);
   }
 
   private static TTAdConfig buildConfig(CsjAdInitOption option) {
