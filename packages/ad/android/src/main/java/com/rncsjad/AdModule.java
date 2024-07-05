@@ -44,7 +44,7 @@ public class AdModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void loadSplashScreen(String code, Promise promise) {
     Log.d(TAG, "loadSplashScreen code: " + code);
-    SplashAd.loadSplashAd(code, Objects.requireNonNull(this.getCurrentActivity()), new TTAdSdk.Callback() {
+    SplashAd.loadSplashAd(code, this.getReactApplicationContext(), new TTAdSdk.Callback() {
       @Override
       public void success() {
         promise.resolve(null);

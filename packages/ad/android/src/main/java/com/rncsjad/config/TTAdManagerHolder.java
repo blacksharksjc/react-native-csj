@@ -19,6 +19,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.rncsjad.constant.AdInitEvent;
 import com.rncsjad.options.CsjAdInitOption;
+import com.rncsjad.utils.EventUtils;
 import com.rncsjad.utils.LogUtils;
 
 public class TTAdManagerHolder {
@@ -46,7 +47,7 @@ public class TTAdManagerHolder {
       public void success() {
         Log.d(TAG, "SDK启动成功");
 
-        sendEvent(context, AD_START_SUCCESS.name(), Arguments.createMap());
+        EventUtils.sendEvent(context, AD_START_SUCCESS.name(), Arguments.createMap());
 
         sStart = true;
         promise.resolve(null);
@@ -60,19 +61,11 @@ public class TTAdManagerHolder {
         WritableMap params = Arguments.createMap();
         params.putInt("code", code);
         params.putString("message", message);
-        sendEvent(context, AD_START_FAIL.name(), params);
+        EventUtils.sendEvent(context, AD_START_FAIL.name(), params);
 
         promise.reject(String.valueOf(code), message);
       }
     });
-  }
-
-  private static void sendEvent(ReactContext reactContext,
-                                String eventName,
-                                @Nullable WritableMap params) {
-    reactContext
-      .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-      .emit(eventName, params);
   }
 
   private static TTAdConfig buildConfig(CsjAdInitOption option) {

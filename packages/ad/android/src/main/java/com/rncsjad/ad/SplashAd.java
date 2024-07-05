@@ -16,7 +16,12 @@ import com.bytedance.sdk.openadsdk.CSJAdError;
 import com.bytedance.sdk.openadsdk.CSJSplashAd;
 import com.bytedance.sdk.openadsdk.TTAdNative;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
 import com.rncsjad.R;
+import com.rncsjad.constant.SplashAdEvent;
+import com.rncsjad.utils.EventUtils;
 import com.rncsjad.utils.LogUtils;
 import com.rncsjad.utils.UIUtils;
 
@@ -27,7 +32,8 @@ public class SplashAd {
   private static WeakReference<Activity> mActivity;
   private static final String TAG = LogUtils.createLogTag("SplashAd");
 
-  public static void show(final Activity activity, View splashView) {
+  public static void show(final ReactContext context, View splashView) {
+    Activity activity = context.getCurrentActivity();
     if (activity == null) return;
     mActivity = new WeakReference<Activity>(activity);
     activity.runOnUiThread(new Runnable() {
@@ -56,7 +62,8 @@ public class SplashAd {
     });
   }
 
-  public static void hide(Activity activity) {
+  public static void hide(ReactContext context) {
+    Activity activity = context.getCurrentActivity();
     if (activity == null) {
       if (mActivity == null) {
         return;
@@ -87,12 +94,14 @@ public class SplashAd {
     });
   }
 
-  public static void loadSplashAd(String code, final Activity activity, TTAdSdk.Callback callback) {
+  public static void loadSplashAd(String code, final ReactContext context, TTAdSdk.Callback callback) {
+    Activity activity = context.getCurrentActivity();
     TTAdNative adNativeLoader = TTAdSdk.getAdManager().createAdNative(activity);
     adNativeLoader.loadSplashAd(buildSplashAdslot(code, activity.getApplicationContext()), new TTAdNative.CSJSplashAdListener() {
       @Override
       public void onSplashLoadSuccess() {
         Log.d(TAG, "广告加载成功");
+        EventUtils.sendEvent(context, SplashAdEvent.ON_SPLASH_LOAD_SUCCESS.name(), Arguments.createMap());
       }
 
       @Override
@@ -100,14 +109,20 @@ public class SplashAd {
         //广告加载失败
         Log.d(TAG, "广告加载失败: " + csjAdError.getCode() + csjAdError.getMsg());
         callback.fail(csjAdError.getCode(), csjAdError.getMsg());
+
+        WritableMap params = Arguments.createMap();
+        params.putInt("code", csjAdError.getCode());
+        params.putString("message", csjAdError.getMsg());
+        EventUtils.sendEvent(context, SplashAdEvent.ON_SPLASH_LOAD_FAIL.name(), params);
       }
 
       @Override
       public void onSplashRenderSuccess(CSJSplashAd csjSplashAd) {
         //广告渲染成功，在此展示广告
         Log.d(TAG, "广告渲染成功");
-        showSplashAd(activity, csjSplashAd);
+        showSplashAd(context, csjSplashAd);
         callback.success();
+        EventUtils.sendEvent(context, SplashAdEvent.ON_SPLASH_RENDER_SUCCESS.name(), Arguments.createMap());
       }
 
       @Override
@@ -115,12 +130,17 @@ public class SplashAd {
         //广告渲染失败
         Log.d(TAG, "广告渲染失败");
         callback.fail(csjAdError.getCode(), csjAdError.getMsg());
+
+        WritableMap params = Arguments.createMap();
+        params.putInt("code", csjAdError.getCode());
+        params.putString("message", csjAdError.getMsg());
+        EventUtils.sendEvent(context, SplashAdEvent.ON_SPLASH_RENDER_FAIL.name(), params);
       }
     }, 3500);
   }
 
   //展示开屏广告
-  private static void showSplashAd(final Activity activity, CSJSplashAd splashAd) {
+  private static void showSplashAd(final ReactContext context, CSJSplashAd splashAd) {
     if (splashAd == null) {
       return;
     }
@@ -139,11 +159,11 @@ public class SplashAd {
       @Override
       public void onSplashAdClose(CSJSplashAd csjSplashAd, int i) {
         //广告关闭
-        hide(activity);
+        hide(context);
       }
     });
 
-    show(activity, splashAd.getSplashView());
+    show(context, splashAd.getSplashView());
   }
 
   // 构造开屏广告的Adslot

@@ -1,18 +1,31 @@
 import * as React from 'react';
 
-import {StyleSheet, View, Button} from 'react-native';
-import { addEventListener, loadRewardAd } from '@rn-csj/ad';
+import { StyleSheet, View, Button, type EmitterSubscription } from 'react-native';
+import { addEventListener, loadRewardAd, AdEvent, SplashAdEvent } from '@rn-csj/ad';
 import { useEffect } from 'react';
-import { AdEvent } from '../../src/types';
 
 export default function App() {
   useEffect(() => {
-    const subscription = addEventListener(AdEvent.AD_START_SUCCESS, () => {
+    const subscriptions: EmitterSubscription[] = [];
+
+    subscriptions.push(addEventListener(AdEvent.AD_START_SUCCESS, () => {
       console.log('广告初始化成功');
-    })
+    }));
+    subscriptions.push(addEventListener(SplashAdEvent.ON_SPLASH_LOAD_SUCCESS, () => {
+      console.log('ON_SPLASH_LOAD_SUCCESS');
+    }));
+    subscriptions.push(addEventListener(SplashAdEvent.ON_SPLASH_LOAD_FAIL, () => {
+      console.log('ON_SPLASH_LOAD_FAIL');
+    }));
+    subscriptions.push(addEventListener(SplashAdEvent.ON_SPLASH_RENDER_SUCCESS, () => {
+      console.log('ON_SPLASH_RENDER_SUCCESS');
+    }));
+    subscriptions.push(addEventListener(SplashAdEvent.ON_SPLASH_RENDER_FAIL, () => {
+      console.log('ON_SPLASH_RENDER_FAIL');
+    }));
 
     return () => {
-      subscription.remove();
+      subscriptions.forEach(sub => sub.remove())
     }
   }, [])
 
