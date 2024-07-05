@@ -1,6 +1,7 @@
 import Native from './native';
 import { type CsjInitOption, NetworkType, TitleBarTheme } from './types';
 import { NativeEventEmitter } from 'react-native';
+export * from './types';
 
 /**
  * 初始化广告引擎
