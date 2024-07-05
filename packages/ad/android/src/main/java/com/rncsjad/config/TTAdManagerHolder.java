@@ -1,5 +1,6 @@
 package com.rncsjad.config;
 
+import static com.rncsjad.constant.AdInitEvent.AD_START_FAIL;
 import static com.rncsjad.constant.AdInitEvent.AD_START_SUCCESS;
 
 import android.content.Context;
@@ -13,6 +14,7 @@ import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.rncsjad.constant.AdInitEvent;
@@ -51,10 +53,16 @@ public class TTAdManagerHolder {
       }
 
       @Override
-      public void fail(int i, String s) {
+      public void fail(int code, String message) {
         sStart = false;
         Log.e(TAG, "SDK启动失败");
-        promise.reject(String.valueOf(i), s);
+
+        WritableMap params = Arguments.createMap();
+        params.putInt("code", code);
+        params.putString("message", message);
+        sendEvent(context, AD_START_FAIL.name(), params);
+
+        promise.reject(String.valueOf(code), message);
       }
     });
   }
