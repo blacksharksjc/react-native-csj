@@ -13,6 +13,7 @@ export function init(option: CsjInitOption): Promise<void> {
     titleBarTheme: TitleBarTheme.TITLE_BAR_THEME_LIGHT,
     directDownloadNetworkType: NetworkType.NETWORK_STATE_WIFI,
     allowShowNotify: true,
+    supportMultiProcess: false,
     ...option,
   }
   return Native.init(optionWithDefault);

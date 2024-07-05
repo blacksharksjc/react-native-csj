@@ -17,6 +17,8 @@ public class CsjAdInitOption {
   public Boolean allowShowNotify;
   // 是否开启debug
   public Boolean debug;
+  // 是否支持多进程
+  public Boolean supportMultiProcess;
 
   public CsjAdInitOption(ReadableMap map)  {
     this.appId = map.getString("appId");
@@ -26,5 +28,6 @@ public class CsjAdInitOption {
     this.directDownloadNetworkType = map.getInt("directDownloadNetworkType");
     this.allowShowNotify = map.getBoolean("allowShowNotify");
     this.debug = map.getBoolean("debug");
+    this.supportMultiProcess = map.getBoolean("supportMultiProcess");
   }
 }

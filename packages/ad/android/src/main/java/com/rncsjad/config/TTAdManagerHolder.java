@@ -84,6 +84,7 @@ public class TTAdManagerHolder {
       .directDownloadNetworkType(option.directDownloadNetworkType)
       .allowShowNotify(option.allowShowNotify)
       .useTextureView(option.debug)
+      .supportMultiProcess(option.supportMultiProcess)
       .build();
   }
 }

@@ -27,6 +27,10 @@ export interface CsjInitOption {
    * 是否开启debug
    */
   debug?: boolean;
+  /**
+   * 是否支持多进程
+   */
+  supportMultiProcess?: boolean;
 }
 
 export enum TitleBarTheme {
