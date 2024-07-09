@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Button, type EmitterSubscription } from 'react-native';
-import { addEventListener, loadRewardAd, AdEvent, SplashAdEvent } from '@rn-csj/ad';
+import { addEventListener, loadRewardAd, AdEvent, SplashAdEvent, RewardAdEvent } from '@rn-csj/ad';
 import { useEffect } from 'react';
 
 export default function App() {
@@ -22,6 +22,40 @@ export default function App() {
     }));
     subscriptions.push(addEventListener(SplashAdEvent.ON_SPLASH_RENDER_FAIL, () => {
       console.log('ON_SPLASH_RENDER_FAIL');
+    }));
+
+    subscriptions.push(addEventListener(RewardAdEvent.ON_ERROR, () => {
+      console.log('ON_ERROR');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_REWARD_VIDEO_AD_LOAD, () => {
+      console.log('ON_REWARD_VIDEO_AD_LOAD');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_REWARD_VIDEO_CACHED, () => {
+      console.log('ON_REWARD_VIDEO_CACHED');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_AD_SHOW, () => {
+      console.log('ON_AD_SHOW');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_AD_VIDEO_BAR_CLICK, () => {
+      console.log('ON_AD_VIDEO_BAR_CLICK');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_AD_CLOSE, () => {
+      console.log('ON_AD_CLOSE');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_AD_CLOSE, () => {
+      console.log('ON_AD_CLOSE');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_VIDEO_COMPLETE, () => {
+      console.log('ON_VIDEO_COMPLETE');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_VIDEO_ERROR, () => {
+      console.log('ON_VIDEO_ERROR');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_SKIPPED_VIDEO, () => {
+      console.log('ON_SKIPPED_VIDEO');
+    }));
+    subscriptions.push(addEventListener(RewardAdEvent.ON_REWARD_ARRIVED, () => {
+      console.log('ON_REWARD_ARRIVED');
     }));
 
     return () => {

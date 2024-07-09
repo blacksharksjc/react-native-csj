@@ -60,7 +60,7 @@ public class AdModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void loadRewardAd(String code, Promise promise) {
     Log.d(TAG, "loadRewardAd code: " + code);
-    RewardAd.loadRewardAd(code, Objects.requireNonNull(this.getCurrentActivity()), promise);
+    RewardAd.loadRewardAd(code, this.getReactApplicationContext(), promise);
   }
 
   @ReactMethod
