@@ -42,14 +42,6 @@ export function loadRewardAd(code: string): Promise<number> {
   return Native.loadRewardAd(code);
 }
 
-/**
- * 请求必要权限
- * @returns
- */
-export function requestPermissionIfNecessary(): void {
-  return Native.requestPermissionIfNecessary();
-}
-
 const eventEmitter = new NativeEventEmitter(Native);
 
 /**
