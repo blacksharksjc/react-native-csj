@@ -1,5 +1,11 @@
 import Native from './native';
-import { type CsjInitOption, NetworkType, TitleBarTheme } from './types';
+import {
+  type CsjInitOption,
+  type Listeners,
+  type NativeEventListener,
+  NetworkType,
+  TitleBarTheme,
+} from './types';
 import { NativeEventEmitter } from 'react-native';
 export * from './types';
 
@@ -51,6 +57,6 @@ const eventEmitter = new NativeEventEmitter(Native);
  * @param eventName
  * @param listener
  */
-export function addEventListener<T extends (event: any) => void>(eventName: string, listener: T) {
+export function addEventListener<T extends keyof Listeners>(eventName: T, listener: NativeEventListener[T]) {
   return eventEmitter.addListener(eventName, listener);
 }

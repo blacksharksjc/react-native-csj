@@ -1,43 +1,40 @@
-package com.rncsjad.config;
-
-import static com.rncsjad.constant.AdInitEvent.AD_START_FAIL;
-import static com.rncsjad.constant.AdInitEvent.AD_START_SUCCESS;
-
-import android.content.Context;
+package com.rncsjad.ad;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import com.bytedance.sdk.openadsdk.TTAdConfig;
-import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
-import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.rncsjad.constant.AdInitEvent;
 import com.rncsjad.options.CsjAdInitOption;
-import com.rncsjad.utils.EventUtils;
+import com.rncsjad.utils.EventHelper;
 import com.rncsjad.utils.LogUtils;
 
-public class TTAdManagerHolder {
-  private static final String TAG = LogUtils.createLogTag("TTAdManagerHolder");
-  private static boolean sInit;
-  private static boolean sStart;
+public class AdSDK {
+  private static final String TAG = LogUtils.createLogTag("AdSDK");
 
-  public static void init(final ReactContext context, CsjAdInitOption option, Promise promise) {
-    if (sInit) {
+  private final ReactApplicationContext mContext;
+  private boolean mInit;
+  private boolean mStart;
+  private final EventHelper mEventHelper;
+
+  public AdSDK(ReactApplicationContext reactContext) {
+    this.mContext = reactContext;
+    this.mEventHelper = new EventHelper(reactContext, "AdSDK");
+  }
+
+  public void init(CsjAdInitOption option, Promise promise) {
+    if (mInit) {
       Log.d(TAG, "SDK已初始化");
       promise.resolve(null);
       return;
     }
-    TTAdSdk.init(context, buildConfig(option));
-    sInit = true;
+    TTAdSdk.init(mContext, buildConfig(option));
+    mInit = true;
     Log.d(TAG, "SDK初始化完成");
 
-    if (sStart) {
+    if (mStart) {
       Log.d(TAG, "SDK已启动");
       promise.resolve(null);
       return;
@@ -47,28 +44,28 @@ public class TTAdManagerHolder {
       public void success() {
         Log.d(TAG, "SDK启动成功");
 
-        EventUtils.sendEvent(context, AD_START_SUCCESS.name(), Arguments.createMap());
+        mEventHelper.sendEvent("onStartSuccess", null);
 
-        sStart = true;
+        mStart = true;
         promise.resolve(null);
       }
 
       @Override
       public void fail(int code, String message) {
-        sStart = false;
+        mStart = false;
         Log.e(TAG, "SDK启动失败");
 
         WritableMap params = Arguments.createMap();
         params.putInt("code", code);
         params.putString("message", message);
-        EventUtils.sendEvent(context, AD_START_FAIL.name(), params);
+        mEventHelper.sendEvent("onStartFail", params);
 
         promise.reject(String.valueOf(code), message);
       }
     });
   }
 
-  private static TTAdConfig buildConfig(CsjAdInitOption option) {
+  private TTAdConfig buildConfig(CsjAdInitOption option) {
     return new TTAdConfig.Builder()
       .appId(option.appId)
       .appName(option.appName)

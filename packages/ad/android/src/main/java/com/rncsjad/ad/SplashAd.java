@@ -17,23 +17,30 @@ import com.bytedance.sdk.openadsdk.CSJSplashAd;
 import com.bytedance.sdk.openadsdk.TTAdNative;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.rncsjad.R;
-import com.rncsjad.constant.SplashAdEvent;
-import com.rncsjad.utils.EventUtils;
+import com.rncsjad.utils.EventHelper;
 import com.rncsjad.utils.LogUtils;
 import com.rncsjad.utils.UIUtils;
 
 import java.lang.ref.WeakReference;
 
 public class SplashAd {
-  private static Dialog mSplashDialog;
-  private static WeakReference<Activity> mActivity;
+  private Dialog mSplashDialog;
+  private WeakReference<Activity> mActivity;
   private static final String TAG = LogUtils.createLogTag("SplashAd");
+  private final ReactApplicationContext mContext;
+  private final EventHelper mEventHelper;
 
-  public static void show(final ReactContext context, View splashView) {
-    Activity activity = context.getCurrentActivity();
+  public SplashAd(ReactApplicationContext reactContext) {
+    this.mContext = reactContext;
+    this.mEventHelper = new EventHelper(reactContext, "SplashAd");
+  }
+
+  public void show(View splashView) {
+    Activity activity = mContext.getCurrentActivity();
     if (activity == null) return;
     mActivity = new WeakReference<Activity>(activity);
     activity.runOnUiThread(new Runnable() {
@@ -62,8 +69,8 @@ public class SplashAd {
     });
   }
 
-  public static void hide(ReactContext context) {
-    Activity activity = context.getCurrentActivity();
+  public void hide() {
+    Activity activity = mContext.getCurrentActivity();
     if (activity == null) {
       if (mActivity == null) {
         return;
@@ -94,53 +101,52 @@ public class SplashAd {
     });
   }
 
-  public static void loadSplashAd(String code, final ReactContext context, TTAdSdk.Callback callback) {
-    Activity activity = context.getCurrentActivity();
-    TTAdNative adNativeLoader = TTAdSdk.getAdManager().createAdNative(activity);
-    adNativeLoader.loadSplashAd(buildSplashAdslot(code, activity.getApplicationContext()), new TTAdNative.CSJSplashAdListener() {
+  public void loadSplashAd(String code, Promise promise) {
+    TTAdNative adNativeLoader = TTAdSdk.getAdManager().createAdNative(mContext.getCurrentActivity());
+    adNativeLoader.loadSplashAd(buildSplashAdslot(code, mContext), new TTAdNative.CSJSplashAdListener() {
       @Override
       public void onSplashLoadSuccess() {
         Log.d(TAG, "广告加载成功");
-        EventUtils.sendEvent(context, SplashAdEvent.ON_SPLASH_LOAD_SUCCESS.name(), Arguments.createMap());
+        mEventHelper.sendEvent("onSplashLoadSuccess", null);
       }
 
       @Override
       public void onSplashLoadFail(CSJAdError csjAdError) {
         //广告加载失败
         Log.d(TAG, "广告加载失败: " + csjAdError.getCode() + csjAdError.getMsg());
-        callback.fail(csjAdError.getCode(), csjAdError.getMsg());
+        promise.reject(String.valueOf(csjAdError.getCode()), csjAdError.getMsg());
 
         WritableMap params = Arguments.createMap();
         params.putInt("code", csjAdError.getCode());
         params.putString("message", csjAdError.getMsg());
-        EventUtils.sendEvent(context, SplashAdEvent.ON_SPLASH_LOAD_FAIL.name(), params);
+        mEventHelper.sendEvent("onSplashLoadFail", params);
       }
 
       @Override
       public void onSplashRenderSuccess(CSJSplashAd csjSplashAd) {
         //广告渲染成功，在此展示广告
         Log.d(TAG, "广告渲染成功");
-        showSplashAd(context, csjSplashAd);
-        callback.success();
-        EventUtils.sendEvent(context, SplashAdEvent.ON_SPLASH_RENDER_SUCCESS.name(), Arguments.createMap());
+        showSplashAd(csjSplashAd);
+        promise.resolve(null);
+        mEventHelper.sendEvent("onSplashRenderSuccess", null);
       }
 
       @Override
       public void onSplashRenderFail(CSJSplashAd csjSplashAd, CSJAdError csjAdError) {
         //广告渲染失败
         Log.d(TAG, "广告渲染失败");
-        callback.fail(csjAdError.getCode(), csjAdError.getMsg());
+        promise.reject(String.valueOf(csjAdError.getCode()), csjAdError.getMsg());
 
         WritableMap params = Arguments.createMap();
         params.putInt("code", csjAdError.getCode());
         params.putString("message", csjAdError.getMsg());
-        EventUtils.sendEvent(context, SplashAdEvent.ON_SPLASH_RENDER_FAIL.name(), params);
+        mEventHelper.sendEvent("onSplashRenderFail", params);
       }
     }, 3500);
   }
 
   //展示开屏广告
-  private static void showSplashAd(final ReactContext context, CSJSplashAd splashAd) {
+  private void showSplashAd(CSJSplashAd splashAd) {
     if (splashAd == null) {
       return;
     }
@@ -148,33 +154,42 @@ public class SplashAd {
     splashAd.setSplashAdListener(new CSJSplashAd.SplashAdListener() {
       @Override
       public void onSplashAdShow(CSJSplashAd csjSplashAd) {
-
+        mEventHelper.sendEvent("onSplashAdShow", null);
       }
 
       @Override
       public void onSplashAdClick(CSJSplashAd csjSplashAd) {
         //广告点击
+        mEventHelper.sendEvent("onSplashAdClick", null);
       }
 
+      /**
+       * 广告关闭
+       * @param csjSplashAd
+       * @param closeType
+       */
       @Override
-      public void onSplashAdClose(CSJSplashAd csjSplashAd, int i) {
-        //广告关闭
-        hide(context);
+      public void onSplashAdClose(CSJSplashAd csjSplashAd, int closeType) {
+        hide();
+
+        WritableMap params = Arguments.createMap();
+        params.putInt("closeType", closeType);
+        mEventHelper.sendEvent("onSplashAdClose", params);
       }
     });
 
-    show(context, splashAd.getSplashView());
+    show(splashAd.getSplashView());
   }
 
   // 构造开屏广告的Adslot
-  private static AdSlot buildSplashAdslot(String code, Context context) {
+  private AdSlot buildSplashAdslot(String code, Context context) {
     return new AdSlot.Builder()
       .setCodeId(code) //广告位ID
       .setImageAcceptedSize(UIUtils.getScreenWidthInPx(context),UIUtils.getScreenHeight(context))  //设置广告宽高 单位px
       .build();
   }
 
-  private static void setActivityAndroidP(Dialog dialog) {
+  private void setActivityAndroidP(Dialog dialog) {
     //设置全屏展示
     if (Build.VERSION.SDK_INT >= 28) {
       if (dialog != null && dialog.getWindow() != null) {
