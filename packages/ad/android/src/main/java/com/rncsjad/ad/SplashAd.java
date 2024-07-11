@@ -103,7 +103,7 @@ public class SplashAd {
 
   public void loadSplashAd(String code, Promise promise) {
     TTAdNative adNativeLoader = TTAdSdk.getAdManager().createAdNative(mContext.getCurrentActivity());
-    adNativeLoader.loadSplashAd(buildSplashAdslot(code, mContext), new TTAdNative.CSJSplashAdListener() {
+    adNativeLoader.loadSplashAd(buildSplashAdslot(code), new TTAdNative.CSJSplashAdListener() {
       @Override
       public void onSplashLoadSuccess() {
         Log.d(TAG, "广告加载成功");
@@ -182,10 +182,10 @@ public class SplashAd {
   }
 
   // 构造开屏广告的Adslot
-  private AdSlot buildSplashAdslot(String code, Context context) {
+  private AdSlot buildSplashAdslot(String code) {
     return new AdSlot.Builder()
       .setCodeId(code) //广告位ID
-      .setImageAcceptedSize(UIUtils.getScreenWidthInPx(context),UIUtils.getScreenHeight(context))  //设置广告宽高 单位px
+      .setImageAcceptedSize(UIUtils.getScreenWidthInPx(mContext),UIUtils.getScreenHeight(mContext))  //设置广告宽高 单位px
       .build();
   }
 
