@@ -7,7 +7,7 @@
 
 封装内容包含以下部分：
 * [广告SDK](https://github.com/blacksharksjc/rn-csj/tree/main/packages/ad/README.md)
-* 小视频SDK
-* 短剧SDK
+* [小视频SDK](https://github.com/blacksharksjc/rn-csj/tree/main/packages/dp/README.md)
+* [短剧SDK](https://github.com/blacksharksjc/rn-csj/tree/main/packages/djx/README.md)
 
 具体内容请查看对应SDK中的README
