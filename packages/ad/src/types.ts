@@ -148,3 +148,13 @@ export interface ErrorEvent {
   code: number;
   message: string;
 }
+
+export interface PrivacyOption {
+  isCanUseLocation: boolean;
+  isCanUsePhoneState: boolean;
+  isCanUseWifiState: boolean;
+  isCanUseWriteExternal: boolean;
+  alist: boolean;
+  isCanUseAndroidId: boolean;
+  isCanUsePermissionRecordAudio: boolean;
+}

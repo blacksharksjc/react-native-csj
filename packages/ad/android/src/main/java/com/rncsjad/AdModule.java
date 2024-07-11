@@ -15,6 +15,7 @@ import com.rncsjad.ad.AdSDK;
 import com.rncsjad.ad.RewardAd;
 import com.rncsjad.ad.SplashAd;
 import com.rncsjad.options.CsjAdInitOption;
+import com.rncsjad.options.CsjPrivacyOption;
 import com.rncsjad.utils.LogUtils;
 
 @ReactModule(name = AdModule.NAME)
@@ -39,9 +40,16 @@ public class AdModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void init(ReadableMap options, Promise promise) {
-    CsjAdInitOption initOption = new CsjAdInitOption(options);
-    adSDK.init(initOption, promise);
+  public void init(ReadableMap map, Promise promise) {
+    CsjAdInitOption option = new CsjAdInitOption(map);
+    adSDK.init(option, promise);
+  }
+
+  @ReactMethod
+  public void updatePrivacy(ReadableMap options, Promise promise) {
+    CsjPrivacyOption option = new CsjPrivacyOption(options);
+    adSDK.updatePrivacy(option);
+    promise.resolve(null);
   }
 
   @ReactMethod

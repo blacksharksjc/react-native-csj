@@ -3,7 +3,7 @@ import {
   type CsjInitOption,
   type Listeners,
   type NativeEventListener,
-  NetworkType,
+  NetworkType, type PrivacyOption,
   TitleBarTheme,
 } from './types';
 import { NativeEventEmitter } from 'react-native';
@@ -51,4 +51,12 @@ const eventEmitter = new NativeEventEmitter(Native);
  */
 export function addEventListener<T extends keyof Listeners>(eventName: T, listener: NativeEventListener[T]) {
   return eventEmitter.addListener(eventName, listener);
+}
+
+/**
+ * 更新隐私权限
+ * @param option
+ */
+export function updatePrivacy(option: Partial<PrivacyOption>): Promise<void> {
+  return Native.updatePrivacy(option)
 }

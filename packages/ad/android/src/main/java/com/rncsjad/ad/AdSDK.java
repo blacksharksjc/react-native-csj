@@ -1,13 +1,16 @@
 package com.rncsjad.ad;
 import android.util.Log;
 
+import com.bytedance.sdk.openadsdk.LocationProvider;
 import com.bytedance.sdk.openadsdk.TTAdConfig;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.bytedance.sdk.openadsdk.TTCustomController;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.rncsjad.options.CsjAdInitOption;
+import com.rncsjad.options.CsjPrivacyOption;
 import com.rncsjad.utils.EventHelper;
 import com.rncsjad.utils.LogUtils;
 
@@ -18,10 +21,12 @@ public class AdSDK {
   private boolean mInit;
   private boolean mStart;
   private final EventHelper mEventHelper;
+  private final PrivacyCustomController privacyCustomController;
 
   public AdSDK(ReactApplicationContext reactContext) {
     this.mContext = reactContext;
     this.mEventHelper = new EventHelper(reactContext, "AdSDK");
+    this.privacyCustomController = new PrivacyCustomController();
   }
 
   public void init(CsjAdInitOption option, Promise promise) {
@@ -65,6 +70,31 @@ public class AdSDK {
     });
   }
 
+  public void updatePrivacy(CsjPrivacyOption option) {
+    if (option.alist != null) {
+      privacyCustomController.setAlist(option.alist);
+    }
+    if (option.isCanUseAndroidId != null) {
+      privacyCustomController.setCanUseAndroidId(option.isCanUseAndroidId);
+    }
+    if (option.isCanUseLocation != null) {
+      privacyCustomController.setCanUseLocation(option.isCanUseLocation);
+    }
+    if (option.isCanUsePermissionRecordAudio != null) {
+      privacyCustomController.setCanUsePermissionRecordAudio(option.isCanUsePermissionRecordAudio);
+    }
+    if (option.isCanUsePhoneState != null) {
+      privacyCustomController.setCanUsePhoneState(option.isCanUsePhoneState);
+    }
+    if (option.isCanUseWifiState != null) {
+      privacyCustomController.setCanUseWifiState(option.isCanUseWifiState);
+    }
+    if (option.isCanUseWriteExternal != null) {
+      privacyCustomController.setCanUseWriteExternal(option.isCanUseWriteExternal);
+    }
+    Log.d(TAG, "隐私策略已更新：" + privacyCustomController);
+  }
+
   private TTAdConfig buildConfig(CsjAdInitOption option) {
     return new TTAdConfig.Builder()
       .appId(option.appId)
@@ -75,6 +105,42 @@ public class AdSDK {
       .allowShowNotify(option.allowShowNotify)
       .useTextureView(option.debug)
       .supportMultiProcess(option.supportMultiProcess)
+      .customController(new TTCustomController() {
+        @Override
+        public boolean isCanUseLocation() {
+          return privacyCustomController.isCanUseLocation();
+        }
+
+        @Override
+        public boolean alist() {
+          return privacyCustomController.isAlist();
+        }
+
+        @Override
+        public boolean isCanUsePhoneState() {
+          return privacyCustomController.isCanUsePhoneState();
+        }
+
+        @Override
+        public boolean isCanUseWifiState() {
+          return privacyCustomController.isCanUseWifiState();
+        }
+
+        @Override
+        public boolean isCanUseWriteExternal() {
+          return privacyCustomController.isCanUseWriteExternal();
+        }
+
+        @Override
+        public boolean isCanUseAndroidId() {
+          return privacyCustomController.isCanUseAndroidId();
+        }
+
+        @Override
+        public boolean isCanUsePermissionRecordAudio() {
+          return privacyCustomController.isCanUsePermissionRecordAudio();
+        }
+      })
       .build();
   }
 }
