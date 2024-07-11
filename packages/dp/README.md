@@ -69,7 +69,7 @@ allprojects {
 
 ```tsx
 
-import { FDPDrawView, DrawContentType, ProgressBarStyle } from '@blacksharks/react-native-csj';
+import { FDPDrawView, DrawContentType, ProgressBarStyle } from '@rn-csj/dp';
 
 export function App() {
   return (
@@ -112,7 +112,7 @@ export function App() {
 
 ```tsx
 
-import { DPGridView, DPGridViewType } from '@blacksharks/react-native-csj';
+import { DPGridView, DPGridViewType } from '@rn-csj/dp';
 
 export function App() {
   return (
