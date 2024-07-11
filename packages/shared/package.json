@@ -1,0 +1,17 @@
+{
+  "name": "@rn-csj/shared",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "type": "module",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.5.2"
+  }
+}

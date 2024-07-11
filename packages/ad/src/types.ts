@@ -1,3 +1,5 @@
+import type { Concat, Remap } from '@rn-csj/shared';
+
 export interface CsjInitOption {
   /**
    * 应用ID
@@ -47,12 +49,6 @@ export enum NetworkType {
   NETWORK_STATE_4G = 5,
   NETWORK_STATE_5G = 6,
 }
-
-export type PrependIfDefined<T extends string, S extends string> = T extends "" ? T : `${S}${T}`;
-export type Concat<T extends string[], S extends string = '.'> = T extends [
-  infer F extends string,
-  ...infer R extends string[]
-] ? `${F}${PrependIfDefined<Concat<R, S>, S>}` : '';
 
 export type AdSDKEvent = 'onStartSuccess' | 'onStartFail';
 export type SplashAdEvent = 'onSplashLoadSuccess'
@@ -115,9 +111,6 @@ export interface Listeners {
 export type ListenerBaseType = {
   [key in NativeEvent]: any;
 };
-type Remap<T, U extends {[key in keyof T]: any}> = {
-  [Property in keyof T]: U[Property];
-}
 export type NativeEventListener = Remap<ListenerBaseType, Listeners>;
 
 export interface RewardArrivedEvent {
