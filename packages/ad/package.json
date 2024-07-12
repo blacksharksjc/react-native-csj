@@ -47,7 +47,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@rn-csj/shared": "file:../shared"
+    "@rn-csj/shared": "*"
   },
   "devDependencies": {
     "@arkweid/lefthook": "^0.7.7",
