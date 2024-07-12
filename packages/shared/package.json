@@ -5,6 +5,7 @@
   "main": "./lib/index.js",
   "type": "module",
   "types": "./lib/index.d.ts",
+  "react-native": "src/index",
   "scripts": {
     "build": "tsc"
   },
@@ -13,5 +14,13 @@
   "license": "ISC",
   "dependencies": {
     "typescript": "^4.5.2"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
