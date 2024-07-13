@@ -1,7 +1,7 @@
 import Native from './native';
 import {
   type CsjInitOption,
-  type Listeners,
+  type Listeners, type CsjLoadSplashAdOption,
   type NativeEventListener,
   NetworkType, type PrivacyOption,
   TitleBarTheme,
@@ -30,8 +30,8 @@ export function init(option: CsjInitOption): Promise<void> {
  * 加载开屏广告
  * @returns
  */
-export function loadSplashScreen(code: string): Promise<void> {
-  return Native.loadSplashScreen(code);
+export function loadSplashScreen(option: CsjLoadSplashAdOption): Promise<void> {
+  return Native.loadSplashScreen(option);
 }
 
 /**

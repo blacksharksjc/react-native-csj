@@ -158,3 +158,8 @@ export interface PrivacyOption {
   isCanUseAndroidId: boolean;
   isCanUsePermissionRecordAudio: boolean;
 }
+
+export interface CsjLoadSplashAdOption {
+  code: string;
+  timeout?: number;
+}

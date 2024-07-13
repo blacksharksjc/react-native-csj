@@ -15,6 +15,7 @@ import com.rncsjad.ad.AdSDK;
 import com.rncsjad.ad.RewardAd;
 import com.rncsjad.ad.SplashAd;
 import com.rncsjad.options.CsjAdInitOption;
+import com.rncsjad.options.CsjLoadSplashAdOption;
 import com.rncsjad.options.CsjPrivacyOption;
 import com.rncsjad.utils.LogUtils;
 
@@ -41,21 +42,19 @@ public class AdModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void init(ReadableMap map, Promise promise) {
-    CsjAdInitOption option = new CsjAdInitOption(map);
-    adSDK.init(option, promise);
+    adSDK.init(new CsjAdInitOption(map), promise);
   }
 
   @ReactMethod
   public void updatePrivacy(ReadableMap options, Promise promise) {
-    CsjPrivacyOption option = new CsjPrivacyOption(options);
-    adSDK.updatePrivacy(option);
+    adSDK.updatePrivacy(new CsjPrivacyOption(options));
     promise.resolve(null);
   }
 
   @ReactMethod
-  public void loadSplashScreen(String code, Promise promise) {
-    Log.d(TAG, "loadSplashScreen code: " + code);
-    splashAd.loadSplashAd(code, promise);
+  public void loadSplashScreen(ReadableMap map, Promise promise) {
+    Log.d(TAG, "loadSplashScreen code: " + map.getString("code"));
+    splashAd.loadSplashAd(new CsjLoadSplashAdOption(map), promise);
   }
 
   @ReactMethod

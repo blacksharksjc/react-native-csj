@@ -91,6 +91,12 @@ allprojects {
 
 ### SDK初始化
 
+#### 调用方式
+
+`init(options: CsjInitOption) => Promise<void>`
+
+#### 示例
+
 ```ts
 import { init } from '@rn-csj/ad';
 
@@ -106,7 +112,7 @@ init(options);
 | appName                   | string                          | 应用名称            | Y    | -                     | -                         | -                      |
 | useTextureView            | boolean                         | 是否使用TextureView | N    | true                  | -                         | -                      |
 | titleBarTheme             | [TitleBarTheme](#TitleBarTheme) | 落地页主题           | N    | TITLE_BAR_THEME_LIGHT | -                         | -                      |
-| directDownloadNetworkType | [NetworkType](#NetworkType)                | 允许直接下载的网络状态集合   | N    | NETWORK_STATE_WIFI    | -                         | -                      |
+| directDownloadNetworkType | [NetworkType](#NetworkType)     | 允许直接下载的网络状态集合   | N    | NETWORK_STATE_WIFI    | -                         | -                      |
 | allowShowNotify           | boolean                         | 是否允许sdk展示通知栏提示  | N    | true                  | -                         | -                      |
 | debug                     | boolean                         | 是否开启debug       | N    | true                  | -                         | -                      |
 | supportMultiProcess       | boolean                         | 是否支持多进程         | N    | false                 | -                         | -                      |
@@ -132,12 +138,25 @@ init(options);
 
 ### 开屏广告
 
+#### 调用方式
+
+`loadSplashScreen(option: LoadSplashAdOption) => Promise<void>`
+
+#### 示例
+
 ```ts
 import { loadSplashScreen } from '@rn-csj/ad';
 
-loadSplashScreen('your_ad_code');
+loadSplashScreen(option);
 
 ```
+
+#### CsjLoadSplashAdOption
+
+| 属性      | 类型     | 描述       | 是否必输 | 默认值 | 示例 | 说明 |
+|---------|--------|----------|------|-----|----|----|
+| code    | string | 广告位      | Y    | -   | -  | -  |
+| timeout | string | 广告加载超时时间 | Y    | -   | -  | -  |
 
 ### 模版渲染激励视频广告
 

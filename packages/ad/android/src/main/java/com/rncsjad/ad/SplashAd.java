@@ -21,6 +21,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.rncsjad.R;
+import com.rncsjad.options.CsjLoadSplashAdOption;
 import com.rncsjad.utils.EventHelper;
 import com.rncsjad.utils.LogUtils;
 import com.rncsjad.utils.UIUtils;
@@ -101,48 +102,9 @@ public class SplashAd {
     });
   }
 
-  public void loadSplashAd(String code, Promise promise) {
+  public void loadSplashAd(CsjLoadSplashAdOption option, Promise promise) {
     TTAdNative adNativeLoader = TTAdSdk.getAdManager().createAdNative(mContext.getCurrentActivity());
-    adNativeLoader.loadSplashAd(buildSplashAdslot(code), new TTAdNative.CSJSplashAdListener() {
-      @Override
-      public void onSplashLoadSuccess() {
-        Log.d(TAG, "广告加载成功");
-        mEventHelper.sendEvent("onSplashLoadSuccess", null);
-      }
-
-      @Override
-      public void onSplashLoadFail(CSJAdError csjAdError) {
-        //广告加载失败
-        Log.d(TAG, "广告加载失败: " + csjAdError.getCode() + csjAdError.getMsg());
-        promise.reject(String.valueOf(csjAdError.getCode()), csjAdError.getMsg());
-
-        WritableMap params = Arguments.createMap();
-        params.putInt("code", csjAdError.getCode());
-        params.putString("message", csjAdError.getMsg());
-        mEventHelper.sendEvent("onSplashLoadFail", params);
-      }
-
-      @Override
-      public void onSplashRenderSuccess(CSJSplashAd csjSplashAd) {
-        //广告渲染成功，在此展示广告
-        Log.d(TAG, "广告渲染成功");
-        showSplashAd(csjSplashAd);
-        promise.resolve(null);
-        mEventHelper.sendEvent("onSplashRenderSuccess", null);
-      }
-
-      @Override
-      public void onSplashRenderFail(CSJSplashAd csjSplashAd, CSJAdError csjAdError) {
-        //广告渲染失败
-        Log.d(TAG, "广告渲染失败");
-        promise.reject(String.valueOf(csjAdError.getCode()), csjAdError.getMsg());
-
-        WritableMap params = Arguments.createMap();
-        params.putInt("code", csjAdError.getCode());
-        params.putString("message", csjAdError.getMsg());
-        mEventHelper.sendEvent("onSplashRenderFail", params);
-      }
-    }, 3500);
+    adNativeLoader.loadSplashAd(buildSplashAdslot(option.code), new NativeSplashAdListener(promise), option.timeout);
   }
 
   //展示开屏广告
@@ -151,33 +113,7 @@ public class SplashAd {
       return;
     }
 
-    splashAd.setSplashAdListener(new CSJSplashAd.SplashAdListener() {
-      @Override
-      public void onSplashAdShow(CSJSplashAd csjSplashAd) {
-        mEventHelper.sendEvent("onSplashAdShow", null);
-      }
-
-      @Override
-      public void onSplashAdClick(CSJSplashAd csjSplashAd) {
-        //广告点击
-        mEventHelper.sendEvent("onSplashAdClick", null);
-      }
-
-      /**
-       * 广告关闭
-       * @param csjSplashAd
-       * @param closeType
-       */
-      @Override
-      public void onSplashAdClose(CSJSplashAd csjSplashAd, int closeType) {
-        hide();
-
-        WritableMap params = Arguments.createMap();
-        params.putInt("closeType", closeType);
-        mEventHelper.sendEvent("onSplashAdClose", params);
-      }
-    });
-
+    splashAd.setSplashAdListener(new SplashAdListener());
     show(splashAd.getSplashView());
   }
 
@@ -185,7 +121,8 @@ public class SplashAd {
   private AdSlot buildSplashAdslot(String code) {
     return new AdSlot.Builder()
       .setCodeId(code) //广告位ID
-      .setImageAcceptedSize(UIUtils.getScreenWidthInPx(mContext),UIUtils.getScreenHeight(mContext))  //设置广告宽高 单位px
+      .setImageAcceptedSize(UIUtils.getScreenWidthInPx(mContext), UIUtils.getScreenHeight(mContext))  //设置广告宽高 单位px
+      .setExpressViewAcceptedSize(UIUtils.getScreenWidthDp(mContext), UIUtils.px2dip(mContext, UIUtils.getScreenHeight(mContext)))
       .build();
   }
 
@@ -198,6 +135,80 @@ public class SplashAd {
         lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         dialog.getWindow().setAttributes(lp);
       }
+    }
+  }
+
+  private class NativeSplashAdListener implements TTAdNative.CSJSplashAdListener {
+    private final Promise mPromise;
+
+    public NativeSplashAdListener(Promise promise) {
+      this.mPromise = promise;
+    }
+
+    @Override
+    public void onSplashLoadSuccess() {
+      Log.d(TAG, "广告加载成功");
+      mEventHelper.sendEvent("onSplashLoadSuccess", null);
+    }
+
+    @Override
+    public void onSplashLoadFail(CSJAdError csjAdError) {
+      //广告加载失败
+      Log.d(TAG, "广告加载失败: " + csjAdError.getCode() + csjAdError.getMsg());
+      mPromise.reject(String.valueOf(csjAdError.getCode()), csjAdError.getMsg());
+
+      WritableMap params = Arguments.createMap();
+      params.putInt("code", csjAdError.getCode());
+      params.putString("message", csjAdError.getMsg());
+      mEventHelper.sendEvent("onSplashLoadFail", params);
+    }
+
+    @Override
+    public void onSplashRenderSuccess(CSJSplashAd csjSplashAd) {
+      //广告渲染成功，在此展示广告
+      Log.d(TAG, "广告渲染成功");
+      showSplashAd(csjSplashAd);
+      mPromise.resolve(null);
+      mEventHelper.sendEvent("onSplashRenderSuccess", null);
+    }
+
+    @Override
+    public void onSplashRenderFail(CSJSplashAd csjSplashAd, CSJAdError csjAdError) {
+      //广告渲染失败
+      Log.d(TAG, "广告渲染失败");
+      mPromise.reject(String.valueOf(csjAdError.getCode()), csjAdError.getMsg());
+
+      WritableMap params = Arguments.createMap();
+      params.putInt("code", csjAdError.getCode());
+      params.putString("message", csjAdError.getMsg());
+      mEventHelper.sendEvent("onSplashRenderFail", params);
+    }
+  }
+
+  private class SplashAdListener implements CSJSplashAd.SplashAdListener {
+    @Override
+    public void onSplashAdShow(CSJSplashAd csjSplashAd) {
+      mEventHelper.sendEvent("onSplashAdShow", null);
+    }
+
+    @Override
+    public void onSplashAdClick(CSJSplashAd csjSplashAd) {
+      //广告点击
+      mEventHelper.sendEvent("onSplashAdClick", null);
+    }
+
+    /**
+     * 广告关闭
+     * @param csjSplashAd
+     * @param closeType
+     */
+    @Override
+    public void onSplashAdClose(CSJSplashAd csjSplashAd, int closeType) {
+      hide();
+
+      WritableMap params = Arguments.createMap();
+      params.putInt("closeType", closeType);
+      mEventHelper.sendEvent("onSplashAdClose", params);
     }
   }
 }
