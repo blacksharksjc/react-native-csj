@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Button, type EmitterSubscription } from 'react-native';
-import { addEventListener, loadRewardAd, updatePrivacy } from '@rn-csj/ad';
+import { addEventListener, loadRewardAd } from '@rn-csj/ad';
 import { useEffect } from 'react';
 
 export default function App() {
@@ -9,15 +9,12 @@ export default function App() {
     const subscriptions: EmitterSubscription[] = [];
 
     subscriptions.push(addEventListener('AdSDK.onStartSuccess', () => {
-      console.log('RewardAd.onRewardArrived');
+      console.log('AdSDK.onStartSuccess');
     }));
 
-    setTimeout(async () => {
-      console.log('更新隐私策略');
-      await updatePrivacy({
-        isCanUseAndroidId: false
-      });
-    }, 5000);
+    subscriptions.push(addEventListener('RewardAd.onRewardArrived', (e) => {
+      console.log('RewardAd.onRewardArrived', e);
+    }));
 
 
     return () => {
