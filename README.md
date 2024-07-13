@@ -2,7 +2,7 @@
 
 本插件是针对[穿山甲平台](https://www.csjplatform.com/)原生SDK封装的一套React Native插件。
 
-> [!IMPORTANT]
+> [!CAUTION]
 > 本插件目前仅针对Android端进行了封装，暂未对iOS端封装.
 
 封装内容包含以下部分：
