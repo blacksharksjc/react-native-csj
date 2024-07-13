@@ -138,6 +138,8 @@ init(options);
 
 ### 开屏广告
 
+> [!NOTICE]不支持点睛动画
+
 #### 调用方式
 
 `loadSplashScreen(option: LoadSplashAdOption) => Promise<void>`
