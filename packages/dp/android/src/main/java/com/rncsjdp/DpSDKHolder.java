@@ -36,7 +36,6 @@ public class DpSDKHolder {
         } else {
           Log.e(TAG, "初始化失败：" + message);
           promise.reject(DP_SDK_INIT_FAIL.getStringCode(), message);
-
         }
 
         WritableMap params = Arguments.createMap();

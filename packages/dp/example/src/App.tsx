@@ -1,17 +1,27 @@
 import * as React from 'react';
 
-import {Dimensions, StyleSheet, View} from 'react-native';
-import {useEffect} from "react";
-import {init as initAdSdk} from "@rn-csj/ad";
-import {init as initDjxSdk} from "@rn-csj/djx";
-import {DPDrawView, init as initDpSDK} from "@rn-csj/dp";
+import { Dimensions, StyleSheet, View } from 'react-native';
+import { useEffect } from 'react';
+import { init as initAdSdk } from '@rn-csj/ad';
+import { init as initDjxSdk } from '@rn-csj/djx';
+import { DPDrawView, init as initDpSDK } from '@rn-csj/dp';
 
 const { width, height } = Dimensions.get('window');
 export default function App() {
   const [ready, setReady] = React.useState(false);
 
   useEffect(() => {
-    initAdSdk('5434881', 'djxsdk_demo').then(initDjxSdk).then(initDpSDK).then(() => {setReady(true)});
+    initAdSdk({
+      appId: '5434881',
+      appName: 'djxsdk_demo',
+    }).then(initDjxSdk).then(() => {
+      return initDpSDK({
+        debug: true,
+        settingFileName: 'SDK_Setting.json'
+      });
+    }).then(() => {
+      setReady(true);
+    });
   }, []);
 
   if (!ready) {
@@ -20,7 +30,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <DPDrawView style={{width, height}}/>
+      <DPDrawView style={{ width, height }} />
     </View>
   );
 }
