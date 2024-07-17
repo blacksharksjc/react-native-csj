@@ -1,4 +1,4 @@
-package com.example.rncsjdjx.newarchitecture.modules;
+package com.bytedance.djxdemo.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
