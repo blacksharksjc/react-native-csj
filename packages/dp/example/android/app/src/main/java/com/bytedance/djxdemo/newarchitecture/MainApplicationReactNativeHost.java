@@ -1,7 +1,9 @@
-package com.example.rncsjdp.newarchitecture;
+package com.bytedance.djxdemo.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
+
+import com.bytedance.djxdemo.BuildConfig;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -19,9 +21,8 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.example.rncsjdp.BuildConfig;
-import com.example.rncsjdp.newarchitecture.components.MainComponentsRegistry;
-import com.example.rncsjdp.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.bytedance.djxdemo.newarchitecture.components.MainComponentsRegistry;
+import com.bytedance.djxdemo.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

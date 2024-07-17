@@ -1,4 +1,4 @@
-package com.example.rncsjdp.newarchitecture.components;
+package com.bytedance.djxdemo.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

@@ -1,4 +1,4 @@
-package com.example.rncsjdp;
+package com.bytedance.djxdemo;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
