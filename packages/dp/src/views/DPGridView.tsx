@@ -6,36 +6,13 @@ import {
   requireNativeComponent,
 } from 'react-native';
 import { useNative } from '../hooks';
-
-export enum DPGridViewType {
-  Grid = '1',
-  DoubleFeed = '2',
-}
-
-export enum CardStyle {
-  NormalStyle = 1,
-  StaggeredStyle,
-}
-
-export interface DPGridViewProps {
-  type?: DPGridViewType;
-  style?: {
-    width: number;
-    height: number;
-  };
-  cardStyle?: CardStyle;
-}
+import { DPGridViewProps } from 'src/types';
 
 const DPGridViewManager =
   requireNativeComponent<DPGridViewProps>('DPGridViewManager');
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
-export const DPGridView: React.FC<DPGridViewProps> = ({
-  type = DPGridViewType.DoubleFeed,
-  style,
-  cardStyle = CardStyle.StaggeredStyle,
-  ...props
-}) => {
+export const DPGridView: React.FC<DPGridViewProps> = ({ style, ...props }) => {
   const { width = windowWidth, height = windowHeight } = style ?? {};
 
   const { nativeCompRef, dispatchCommand } = useNative('DJXDrawViewManager');
@@ -52,9 +29,9 @@ export const DPGridView: React.FC<DPGridViewProps> = ({
         width: PixelRatio.getPixelSizeForLayoutSize(width),
         height: PixelRatio.getPixelSizeForLayoutSize(height),
       }}
-      type={type}
-      cardStyle={cardStyle}
       {...props}
     />
   );
 };
+
+export default DPGridView;

@@ -4,7 +4,12 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import { useEffect } from 'react';
 import { init as initAdSdk } from '@rn-csj/ad';
 import { init as initDjxSdk } from '@rn-csj/djx';
-import { DPDrawView, init as initDpSDK } from '@rn-csj/dp';
+import {
+  DPDrawView,
+  DrawChannelType,
+  DrawContentType,
+  init as initDpSDK,
+} from '@rn-csj/dp';
 
 const { width, height } = Dimensions.get('window');
 export default function App() {
@@ -14,14 +19,22 @@ export default function App() {
     initAdSdk({
       appId: '5434881',
       appName: 'djxsdk_demo',
-    }).then(initDjxSdk).then(() => {
-      return initDpSDK({
-        debug: true,
-        settingFileName: 'SDK_Setting.json'
+    })
+      .then(() => {
+        return initDjxSdk({
+          debug: true,
+          settingFileName: 'SDK_Setting.json',
+        });
+      })
+      .then(() => {
+        return initDpSDK({
+          debug: true,
+          settingFileName: 'SDK_Setting.json',
+        });
+      })
+      .then(() => {
+        setReady(true);
       });
-    }).then(() => {
-      setReady(true);
-    });
   }, []);
 
   if (!ready) {
@@ -30,7 +43,15 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <DPDrawView style={{ width, height }} />
+      <DPDrawView
+        style={{ width, height }}
+        hideClose
+        hideChannelName
+        hideFollow
+        enableRefresh={false}
+        drawChannelType={DrawChannelType.Recommend}
+        drawContentType={DrawContentType.All}
+      />
     </View>
   );
 }

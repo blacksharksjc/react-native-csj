@@ -6,34 +6,13 @@ import {
   requireNativeComponent,
 } from 'react-native';
 import { useNative } from '../hooks';
-
-export enum DrawContentType {
-  Video = 1,
-  Live = 2,
-  All = 3,
-}
-
-export enum ProgressBarStyle {
-  Light = 1,
-  Dark = 2,
-}
-
-export interface DPDrawViewProps {
-  drawContentType?: DrawContentType;
-  style?: {
-    width: number;
-    height: number;
-  };
-  progressBarStyle?: ProgressBarStyle;
-}
+import { DPDrawViewProps } from 'src/types';
 
 const DPDrawViewManager: any = requireNativeComponent('DPDrawViewManager');
-
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 export const DPDrawView: React.FC<DPDrawViewProps> = ({
-  drawContentType = DrawContentType.Video,
   style,
-  progressBarStyle = ProgressBarStyle.Light,
+  ...props
 }) => {
   const { width = windowWidth, height = windowHeight } = style ?? {};
 
@@ -52,8 +31,9 @@ export const DPDrawView: React.FC<DPDrawViewProps> = ({
         width: PixelRatio.getPixelSizeForLayoutSize(width),
         height: PixelRatio.getPixelSizeForLayoutSize(height),
       }}
-      drawContentType={drawContentType}
-      progressBarStyle={progressBarStyle}
+      {...props}
     />
   );
 };
+
+export default DPDrawView;

@@ -1,2 +1,2 @@
-export * from './DPGridView';
-export * from './DPDrawView';
+export { default as DPGridView } from './DPGridView';
+export { default as DPDrawView } from './DPDrawView';

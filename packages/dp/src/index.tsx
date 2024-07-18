@@ -1,6 +1,7 @@
 import Native from './native';
 import type { CsjDpSDKInitOption } from './types';
 export * from './views';
+export * from './types';
 
 /**
  * 初始化广告引擎
