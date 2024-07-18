@@ -1,7 +1,7 @@
 import Native from './native';
 import {
   type CsjInitOption,
-  type Listeners, type CsjLoadSplashAdOption,
+  type AdEventListeners, type CsjLoadSplashAdOption,
   type NativeEventListener,
   NetworkType, type PrivacyOption,
   TitleBarTheme,
@@ -49,7 +49,7 @@ const eventEmitter = new NativeEventEmitter(Native);
  * @param eventName
  * @param listener
  */
-export function addEventListener<T extends keyof Listeners>(eventName: T, listener: NativeEventListener[T]) {
+export function addEventListener<T extends keyof AdEventListeners>(eventName: T, listener: NativeEventListener[T]) {
   return eventEmitter.addListener(eventName, listener);
 }
 
