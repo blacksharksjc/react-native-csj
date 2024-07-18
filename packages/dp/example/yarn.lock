@@ -960,10 +960,8 @@
   resolved "https://registry.yarnpkg.com/@react-native/polyfills/-/polyfills-2.0.0.tgz#4c40b74655c83982c8cf47530ee7dc13d957b6aa"
   integrity sha512-K0aGNn1TjalKj+65D7ycc1//H9roAQ51GJVk5ZJQFb2teECGmzd86bYDC0aYdbRf7gtovescq4Zt6FR0tgXiHQ==
 
-"@rn-csj/ad@*":
+"@rn-csj/ad@file:../../ad":
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@rn-csj/ad/-/ad-1.0.0.tgz#6ed9bec3c42c9cd82ab6e940af7d4377f597fbde"
-  integrity sha512-cRHZ66GDDY8lCQL+wacMHZSZvIeu26BxMRCTaMUvt4S5v22HCtOV3JUclpYKV6xEYgMUqB34emwtLTB7w5Tb6g==
   dependencies:
     "@rn-csj/shared" "*"
 
