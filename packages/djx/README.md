@@ -56,6 +56,29 @@ allprojects {
 
 ## 🔨使用
 
+### SDK初始化
+
+#### 调用方式
+
+`init(options: CsjDjxSDKInitOption) => Promise<void>`
+
+#### 示例
+
+```ts
+import { init } from '@rn-csj/dp';
+
+init(options);
+
+```
+
+#### CsjDjxSDKInitOption
+
+| 属性            | 类型    | 描述          | 是否必输 | 默认值 | 示例               | 说明 |
+| --------------- | ------- | ------------- | -------- | ------ | ------------------ | ---- |
+| settingFileName | string  | 配置文件名称  | Y        | -      | 'SDK_Setting.json' | -    |
+| debug           | boolean | 是否开启debug | N        | false  | -                  | -    |
+
+
 ### 短剧聚合页
 
 #### 示例

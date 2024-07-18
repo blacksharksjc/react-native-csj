@@ -63,6 +63,28 @@ allprojects {
 
 ## 🔨使用
 
+### SDK初始化
+
+#### 调用方式
+
+`init(options: CsjDpSDKInitOption) => Promise<void>`
+
+#### 示例
+
+```ts
+import { init } from '@rn-csj/dp';
+
+init(options);
+
+```
+
+#### CsjDpSDKInitOption
+
+| 属性            | 类型    | 描述          | 是否必输 | 默认值 | 示例               | 说明 |
+| --------------- | ------- | ------------- | -------- | ------ | ------------------ | ---- |
+| settingFileName | string  | 配置文件名称  | Y        | -      | 'SDK_Setting.json' | -    |
+| debug           | boolean | 是否开启debug | N        | false  | -                  | -    |
+
 ### 沉浸式小视频
 
 #### 示例
@@ -85,26 +107,26 @@ export function App() {
 
 #### API
 
-| 属性               | 类型                                    | 描述       | 是否必输 | 默认值   | 示例                        | 说明                     |
-|------------------|---------------------------------------|----------|------|-------|---------------------------|------------------------|
-| style            | object                                | 样式       | Y    | -     | {width: 100, height: 100} | 仅支持width和height，并且两者必输 |
-| drawContentType  | [DrawContentType](#DrawContentType)   | 混流内容     | N    | Video | -                         | -                      |
-| progressBarStyle | [ProgressBarStyle](#ProgressBarStyle) | 播放器进度条样式 | N    | Light | -                         | -                      |
+| 属性             | 类型                                  | 描述             | 是否必输 | 默认值 | 示例                      | 说明                              |
+| ---------------- | ------------------------------------- | ---------------- | -------- | ------ | ------------------------- | --------------------------------- |
+| style            | object                                | 样式             | Y        | -      | {width: 100, height: 100} | 仅支持width和height，并且两者必输 |
+| drawContentType  | [DrawContentType](#DrawContentType)   | 混流内容         | N        | Video  | -                         | -                                 |
+| progressBarStyle | [ProgressBarStyle](#ProgressBarStyle) | 播放器进度条样式 | N        | Light  | -                         | -                                 |
 
 ##### DrawContentType
 
-| 枚举值   | 说明        |
-|-------|-----------|
-| Video | 小视频+广告    |
-| Live  | 直播+广告     |
-| All   | 直播+小视频+广告 |
+| 枚举值 | 说明             |
+| ------ | ---------------- |
+| Video  | 小视频+广告      |
+| Live   | 直播+广告        |
+| All    | 直播+小视频+广告 |
 
 ##### ProgressBarStyle
 
-| 枚举值   | 说明 |
-|-------|----|
-| Light | 浅色 |
-| Dark  | 深色 |
+| 枚举值 | 说明 |
+| ------ | ---- |
+| Light  | 浅色 |
+| Dark   | 深色 |
 
 ### 宫格小视频
 
@@ -128,39 +150,39 @@ export function App() {
 
 #### API
 
-| 属性        | 类型                                | 描述     | 是否必输 | 默认值            | 示例                        | 说明                     |
-|-----------|-----------------------------------|--------|------|----------------|---------------------------|------------------------|
-| style     | object                            | 样式     | Y    | -              | {width: 100, height: 100} | 仅支持width和height，并且两者必输 |
-| type      | [DPGridViewType](#DPGridViewType) | 类型     | N    | DoubleFeed     | -                         | -                      |
-| cardStyle | [CardStyle](#CardStyle)           | 宫格卡片样式 | N    | StaggeredStyle | -                         | -                      |
+| 属性      | 类型                              | 描述         | 是否必输 | 默认值         | 示例                      | 说明                              |
+| --------- | --------------------------------- | ------------ | -------- | -------------- | ------------------------- | --------------------------------- |
+| style     | object                            | 样式         | Y        | -              | {width: 100, height: 100} | 仅支持width和height，并且两者必输 |
+| type      | [DPGridViewType](#DPGridViewType) | 类型         | N        | DoubleFeed     | -                         | -                                 |
+| cardStyle | [CardStyle](#CardStyle)           | 宫格卡片样式 | N        | StaggeredStyle | -                         | -                                 |
 
 ##### DPGridViewType
 
-| 枚举值        | 说明     |
-|------------|--------|
+| 枚举值     | 说明     |
+| ---------- | -------- |
 | Grid       | 宫格     |
 | DoubleFeed | 双Feed流 |
 
 ##### CardStyle
 
-| 枚举值            | 说明    |
-|----------------|-------|
-| NormalStyle    | 普通样式  |
+| 枚举值         | 说明       |
+| -------------- | ---------- |
+| NormalStyle    | 普通样式   |
 | StaggeredStyle | 瀑布流样式 |
 
 ## 💡插件支持情况
 
-| 功能                 | 是否支持 |
-|--------------------|------|
-| 沉浸式小视频             | ✓    |
-| 宫格小视频              | ✓    |
-| 小视频卡片              | ×    |
-| 小视频单卡片             | ×    |
-| 个人主页               | ×    |
-| 热门个性化组件_气泡组件       | ×    |
-| 热门个性化推荐组件_文字链组件    | ×    |
-| 热门个性化推荐组件_站内Push组件 | ×    |
-| 热门个性化推荐组件_Banner组件 | ×    |
+| 功能                            | 是否支持 |
+| ------------------------------- | -------- |
+| 沉浸式小视频                    | ✓        |
+| 宫格小视频                      | ✓        |
+| 小视频卡片                      | ×        |
+| 小视频单卡片                    | ×        |
+| 个人主页                        | ×        |
+| 热门个性化组件_气泡组件         | ×        |
+| 热门个性化推荐组件_文字链组件   | ×        |
+| 热门个性化推荐组件_站内Push组件 | ×        |
+| 热门个性化推荐组件_Banner组件   | ×        |
 
 ## SDK版本信息
 
