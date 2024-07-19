@@ -8,20 +8,36 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.bytedance.sdk.dp.DPPageState;
 import com.bytedance.sdk.dp.DPSdk;
 import com.bytedance.sdk.dp.DPWidgetDrawParams;
+import com.bytedance.sdk.dp.IDPAdListener;
+import com.bytedance.sdk.dp.IDPBannerListener;
+import com.bytedance.sdk.dp.IDPDrawListener;
+import com.bytedance.sdk.dp.IDPQuizHandler;
 import com.bytedance.sdk.dp.IDPWidget;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
+import com.facebook.react.uimanager.events.Event;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
+import com.facebook.react.uimanager.events.RCTModernEventEmitter;
+import com.rncsjdp.listeners.CsjDPAdListener;
+import com.rncsjdp.listeners.CsjDPDrawListener;
+import com.rncsjdp.utils.EventHelper;
 import com.rncsjdp.utils.LogUtils;
 
+import java.util.List;
 import java.util.Map;
 
 public class DPDrawViewManager extends ViewGroupManager<FrameLayout> {
@@ -31,6 +47,7 @@ public class DPDrawViewManager extends ViewGroupManager<FrameLayout> {
   ReactApplicationContext reactContext;
   public final int COMMAND_CREATE = 1;
   private IDPWidget mWidget;
+  private final EventHelper eventHelper;
 
   // 宽度
   private int mWidth;
@@ -76,6 +93,7 @@ public class DPDrawViewManager extends ViewGroupManager<FrameLayout> {
 
   public DPDrawViewManager(ReactApplicationContext reactContext) {
     this.reactContext = reactContext;
+    this.eventHelper  = new EventHelper(reactContext);
   }
 
   @ReactProp(name = "progressBarStyle")
@@ -221,7 +239,9 @@ public class DPDrawViewManager extends ViewGroupManager<FrameLayout> {
 
   private DPWidgetDrawParams buildParams(int reactNativeViewId) {
     DPWidgetDrawParams params = DPWidgetDrawParams
-      .obtain();
+      .obtain()
+      .listener(new CsjDPDrawListener(reactNativeViewId, reactContext))
+      .adListener(new CsjDPAdListener(reactNativeViewId, reactContext));
 
     if (mProgressBarStyle != null) {
       params.progressBarStyle(mProgressBarStyle);
@@ -272,6 +292,7 @@ public class DPDrawViewManager extends ViewGroupManager<FrameLayout> {
     return params;
   }
 
+
   public void setupLayout(ViewGroup view) {
     Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
       @Override
@@ -292,5 +313,48 @@ public class DPDrawViewManager extends ViewGroupManager<FrameLayout> {
       View.MeasureSpec.makeMeasureSpec(mHeight, View.MeasureSpec.EXACTLY));
 
     view.layout(0, 0, mWidth, mHeight);
+  }
+
+  @Nullable
+  @Override
+  public Map<String, Object> getExportedCustomDirectEventTypeConstants() {
+    return MapBuilder.<String, Object>builder()
+      // IDPDrawListener
+      .put("onDPRefreshFinish", MapBuilder.of("registrationName", "onDPRefreshFinish"))
+      .put("onDPListDataChange", MapBuilder.of("registrationName", "onDPListDataChange"))
+      .put("onDPSeekTo", MapBuilder.of("registrationName", "onDPSeekTo"))
+      .put("onDPPageChange", MapBuilder.of("registrationName", "onDPPageChange"))
+      .put("onDPVideoPlay", MapBuilder.of("registrationName", "onDPVideoPlay"))
+      .put("onDPVideoPause", MapBuilder.of("registrationName", "onDPVideoPause"))
+      .put("onDPVideoContinue", MapBuilder.of("registrationName", "onDPVideoContinue"))
+      .put("onDPVideoCompletion", MapBuilder.of("registrationName", "onDPVideoCompletion"))
+      .put("onDPVideoOver", MapBuilder.of("registrationName", "onDPVideoOver"))
+      .put("onDPClose", MapBuilder.of("registrationName", "onDPClose"))
+      .put("onDPReportResult", MapBuilder.of("registrationName", "onDPReportResult"))
+      .put("onDPRequestStart", MapBuilder.of("registrationName", "onDPRequestStart"))
+      .put("onDPRequestFail", MapBuilder.of("registrationName", "onDPRequestFail"))
+      .put("onDPRequestSuccess", MapBuilder.of("registrationName", "onDPRequestSuccess"))
+      .put("onDPClickAvatar", MapBuilder.of("registrationName", "onDPClickAvatar"))
+      .put("onDPClickAuthorName", MapBuilder.of("registrationName", "onDPClickAuthorName"))
+      .put("onDPClickComment", MapBuilder.of("registrationName", "onDPClickComment"))
+      .put("onDPClickLike", MapBuilder.of("registrationName", "onDPClickLike"))
+      .put("onDPClickShare", MapBuilder.of("registrationName", "onDPClickShare"))
+      .put("onDPPageStateChanged", MapBuilder.of("registrationName", "onDPPageStateChanged"))
+      .put("onQuizBindData", MapBuilder.of("registrationName", "onQuizBindData"))
+      .put("onDurationChange", MapBuilder.of("registrationName", "onDurationChange"))
+      // IDPAdListener
+      .put("onDPAdRequest", MapBuilder.of("registrationName", "onDPAdRequest"))
+      .put("onDPAdRequestSuccess", MapBuilder.of("registrationName", "onDPAdRequestSuccess"))
+      .put("onDPAdRequestFail", MapBuilder.of("registrationName", "onDPAdRequestFail"))
+      .put("onDPAdFillFail", MapBuilder.of("registrationName", "onDPAdFillFail"))
+      .put("onDPAdShow", MapBuilder.of("registrationName", "onDPAdShow"))
+      .put("onDPAdPlayStart", MapBuilder.of("registrationName", "onDPAdPlayStart"))
+      .put("onDPAdPlayPause", MapBuilder.of("registrationName", "onDPAdPlayPause"))
+      .put("onDPAdPlayContinue", MapBuilder.of("registrationName", "onDPAdPlayContinue"))
+      .put("onDPAdPlayComplete", MapBuilder.of("registrationName", "onDPAdPlayComplete"))
+      .put("onDPAdClicked", MapBuilder.of("registrationName", "onDPAdClicked"))
+      .put("onRewardVerify", MapBuilder.of("registrationName", "onRewardVerify"))
+      .put("onSkippedVideo", MapBuilder.of("registrationName", "onSkippedVideo"))
+      .build();
   }
 }

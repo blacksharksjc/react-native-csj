@@ -122,6 +122,12 @@ export interface DPDrawViewProps {
    * 视频场景
    */
   scene?: string;
+  /**
+   * 下拉刷新事件
+   */
+  onDPRefreshFinish?: () => void;
+  onDPAdRequest?: () => void;
+  onDPVideoPlay?: () => void;
 }
 
 export enum DPGridViewType {

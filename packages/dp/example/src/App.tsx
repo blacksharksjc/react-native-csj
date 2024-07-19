@@ -48,9 +48,17 @@ export default function App() {
         hideClose
         hideChannelName
         hideFollow
-        enableRefresh={false}
         drawChannelType={DrawChannelType.Recommend}
         drawContentType={DrawContentType.All}
+        onDPVideoPlay={() => {
+          console.log('onDPVideoPlay');
+        }}
+        onDPAdRequest={() => {
+          console.log('onDPAdRequest');
+        }}
+        onDPRefreshFinish={() => {
+          console.log('onDPRefreshFinish');
+        }}
       />
     </View>
   );

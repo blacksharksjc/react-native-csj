@@ -5,6 +5,9 @@ import androidx.annotation.Nullable;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.uimanager.UIManagerModule;
+import com.facebook.react.uimanager.events.Event;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,13 +23,20 @@ public class EventHelper {
   }
 
   private String buildName(String eventName) {
-    String namespace = String.join(".", namespaces);
-    return namespace + "." + eventName;
+    if (!namespaces.isEmpty()) {
+      String namespace = String.join(".", namespaces);
+      return namespace + "." + eventName;
+    }
+    return eventName;
   }
 
   public void sendEvent(String eventName, @Nullable WritableMap params) {
     mContext
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
       .emit(buildName(eventName), params);
+  }
+
+  public void receiveEvent(int tagViewId, String eventName, @Nullable WritableMap params) {
+    mContext.getJSModule(RCTEventEmitter.class).receiveEvent(tagViewId, eventName, params);
   }
 }
