@@ -1,4 +1,4 @@
-# @rn-csj/djx
+# @react-native-csj/djx
 
 穿山甲短剧SDK React Native插件
 
@@ -10,7 +10,7 @@
 
 ```sh
 
-npm install @rn-csj/djx
+npm install @react-native-csj/djx
 
 ```
 
@@ -18,7 +18,7 @@ npm install @rn-csj/djx
 
 ```shell
 
-yarn add @rn-csj/djx
+yarn add @react-native-csj/djx
 
 ```
 
@@ -65,7 +65,7 @@ allprojects {
 #### 示例
 
 ```ts
-import { init } from '@rn-csj/dp';
+import { init } from '@react-native-csj/dp';
 
 init(options);
 
@@ -85,7 +85,7 @@ init(options);
 
 ```tsx
 
-import { DJXDrawHomeView } from '@rn-csj/djx';
+import { DJXDrawHomeView } from '@react-native-csj/djx';
 
 export function App() {
   return (
@@ -110,7 +110,7 @@ export function App() {
 
 ```tsx
 
-import { DJXDrawView } from '@rn-csj/djx';
+import { DJXDrawView } from '@react-native-csj/djx';
 
 export function App() {
   return (

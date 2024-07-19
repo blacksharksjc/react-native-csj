@@ -1,4 +1,4 @@
-# @rn-csj/ad
+# @react-native-csj/ad
 
 穿山甲广告SDK React Native插件
 
@@ -10,7 +10,7 @@
 
 ```sh
 
-npm install @rn-csj/ad
+npm install @react-native-csj/ad
 
 ```
 
@@ -18,7 +18,7 @@ npm install @rn-csj/ad
 
 ```shell
 
-yarn add @rn-csj/ad
+yarn add @react-native-csj/ad
 
 ```
 
@@ -98,7 +98,7 @@ allprojects {
 #### 示例
 
 ```ts
-import { init } from '@rn-csj/ad';
+import { init } from '@react-native-csj/ad';
 
 init(options);
 
@@ -148,7 +148,7 @@ init(options);
 #### 示例
 
 ```ts
-import { loadSplashScreen } from '@rn-csj/ad';
+import { loadSplashScreen } from '@react-native-csj/ad';
 
 loadSplashScreen(option);
 
@@ -164,7 +164,7 @@ loadSplashScreen(option);
 ### 模版渲染激励视频广告
 
 ```ts
-import { loadRewardAd } from '@rn-csj/ad';
+import { loadRewardAd } from '@react-native-csj/ad';
 
 loadRewardAd('your_ad_code');
 

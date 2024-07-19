@@ -1,4 +1,4 @@
-# @rn-csj/dp
+# @react-native-csj/dp
 
 穿山甲小视频SDK React Native插件
 
@@ -10,7 +10,7 @@
 
 ```sh
 
-npm install @rn-csj/dp
+npm install @react-native-csj/dp
 
 ```
 
@@ -18,13 +18,11 @@ npm install @rn-csj/dp
 
 ```shell
 
-yarn add @rn-csj/dp
+yarn add @react-native-csj/dp
 
 ```
 
 #### 配置
-
-span
 
 ```gradle
 
@@ -57,8 +55,6 @@ allprojects {
 </application>
 ```
 
-</details>
-
 ## 🔨使用
 
 ### SDK初始化
@@ -70,7 +66,7 @@ allprojects {
 #### 示例
 
 ```ts
-import { init } from '@rn-csj/dp';
+import { init } from '@react-native-csj/dp';
 
 init(options);
 
@@ -89,7 +85,7 @@ init(options);
 
 ```tsx
 
-import { FDPDrawView, DrawContentType, ProgressBarStyle } from '@rn-csj/dp';
+import { FDPDrawView, DrawContentType, ProgressBarStyle } from '@react-native-csj/dp';
 
 export function App() {
   return (
@@ -152,7 +148,7 @@ export function App() {
 
 ```tsx
 
-import { DPGridView, DPGridViewType } from '@rn-csj/dp';
+import { DPGridView, DPGridViewType } from '@react-native-csj/dp';
 
 export function App() {
   return (
