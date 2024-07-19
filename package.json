@@ -1,5 +1,5 @@
 {
-  "name": "rn-csj",
+  "name": "@react-native-csj/root",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",

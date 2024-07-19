@@ -1,5 +1,5 @@
 {
-  "name": "@rn-csj/dp",
+  "name": "@react-native-csj/dp",
   "version": "0.1.0",
   "description": "test",
   "main": "lib/commonjs/index",

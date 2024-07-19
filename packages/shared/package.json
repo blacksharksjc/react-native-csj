@@ -1,5 +1,5 @@
 {
-  "name": "@rn-csj/shared",
+  "name": "@react-native-csj/shared",
   "version": "1.0.0",
   "description": "",
   "main": "./lib/index.js",
