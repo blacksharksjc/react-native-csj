@@ -12,9 +12,9 @@
   "dependencies": {
     "react": "17.0.2",
     "react-native": "0.68.2",
-    "@rn-csj/ad": "file:../packages/ad",
-    "@rn-csj/dp": "file:../packages/dp",
-    "@rn-csj/djx": "file:../packages/djx"
+    "@react-native-csj/ad": "file:../packages/ad",
+    "@react-native-csj/dp": "file:../packages/dp",
+    "@react-native-csj/djx": "file:../packages/djx"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
