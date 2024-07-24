@@ -1,7 +1,7 @@
 {
   "name": "@react-native-csj/ad",
   "version": "1.0.0",
-  "description": "test",
+  "description": "React Native穿山甲广告插件",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -47,7 +47,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@rn-csj/shared": "1.0.0"
+    "@react-native-csj/shared": "^1.0.0"
   },
   "devDependencies": {
     "@arkweid/lefthook": "^0.7.7",
