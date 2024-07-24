@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@rn-csj/dp": ["./src/index"]
+      "@react-native-csj/dp": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

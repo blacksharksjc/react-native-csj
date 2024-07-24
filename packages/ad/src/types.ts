@@ -1,4 +1,4 @@
-import type { EventWithNamespace, NativeEventListenerGeneric } from '@rn-csj/shared';
+import type { EventWithNamespace, NativeEventListenerGeneric } from '@react-native-csj/shared';
 
 export interface CsjInitOption {
   /**

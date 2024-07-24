@@ -2,14 +2,14 @@ import * as React from 'react';
 
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { useEffect } from 'react';
-import { init as initAdSdk } from '@rn-csj/ad';
-import { init as initDjxSdk } from '@rn-csj/djx';
+import { init as initAdSdk } from '@react-native-csj/ad';
+import { init as initDjxSdk } from '@react-native-csj/djx';
 import {
   DPDrawView,
   DrawChannelType,
   DrawContentType,
   init as initDpSDK,
-} from '@rn-csj/dp';
+} from '@react-native-csj/dp';
 
 const { width, height } = Dimensions.get('window');
 export default function App() {

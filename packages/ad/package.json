@@ -1,6 +1,6 @@
 {
   "name": "@react-native-csj/ad",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Native穿山甲广告插件",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

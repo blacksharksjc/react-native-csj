@@ -47,7 +47,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@rn-csj/shared": "*"
+    "@react-native-csj/shared": "^1.0.0"
   },
   "devDependencies": {
     "@arkweid/lefthook": "^0.7.7",

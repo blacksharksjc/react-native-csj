@@ -945,6 +945,19 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
+"@react-native-csj/ad@file:../../ad":
+  version "1.0.0"
+  dependencies:
+    "@react-native-csj/shared" "file:../../../../../Library/Caches/Yarn/v6/npm-@react-native-csj-ad-1.0.0-038f45c4-f2ef-4a10-b04b-caac143f4250-1721786645842/node_modules/@react-native-csj/shared"
+
+"@react-native-csj/djx@file:../../djx":
+  version "0.1.0"
+
+"@react-native-csj/shared@file:../../shared":
+  version "1.0.0"
+  dependencies:
+    typescript "^4.5.2"
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -959,21 +972,6 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/polyfills/-/polyfills-2.0.0.tgz#4c40b74655c83982c8cf47530ee7dc13d957b6aa"
   integrity sha512-K0aGNn1TjalKj+65D7ycc1//H9roAQ51GJVk5ZJQFb2teECGmzd86bYDC0aYdbRf7gtovescq4Zt6FR0tgXiHQ==
-
-"@rn-csj/ad@file:../../ad":
-  version "1.0.0"
-  dependencies:
-    "@rn-csj/shared" "*"
-
-"@rn-csj/djx@file:../../djx":
-  version "0.1.0"
-
-"@rn-csj/shared@*":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@rn-csj/shared/-/shared-1.0.0.tgz#c56a53a475c010f9183c2973a91738a2342809d8"
-  integrity sha512-V+qgQbFlnV910Qv9yEiqYPZneDe2ZI2ACRMtvn8fD06smANTRN2q9fa1m35a5yye6VC79x1UlTXqaLZyMPkx5g==
-  dependencies:
-    typescript "^4.5.2"
 
 "@sideway/address@^4.1.3":
   version "4.1.4"
