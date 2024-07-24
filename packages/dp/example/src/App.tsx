@@ -50,14 +50,14 @@ export default function App() {
         hideFollow
         drawChannelType={DrawChannelType.Recommend}
         drawContentType={DrawContentType.All}
-        onDPVideoPlay={() => {
-          console.log('onDPVideoPlay');
-        }}
-        onDPAdRequest={() => {
-          console.log('onDPAdRequest');
+        onDPVideoPlay={(data) => {
+          console.log('onDPVideoPlay', data.nativeEvent);
         }}
         onDPRefreshFinish={() => {
           console.log('onDPRefreshFinish');
+        }}
+        onDPPageChange={data => {
+          console.log('onDPPageChange', data.nativeEvent);
         }}
       />
     </View>
