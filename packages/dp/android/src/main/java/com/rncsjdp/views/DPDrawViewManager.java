@@ -47,7 +47,6 @@ public class DPDrawViewManager extends ViewGroupManager<FrameLayout> {
   ReactApplicationContext reactContext;
   public final int COMMAND_CREATE = 1;
   private IDPWidget mWidget;
-  private final EventHelper eventHelper;
 
   // 宽度
   private int mWidth;
@@ -93,7 +92,6 @@ public class DPDrawViewManager extends ViewGroupManager<FrameLayout> {
 
   public DPDrawViewManager(ReactApplicationContext reactContext) {
     this.reactContext = reactContext;
-    this.eventHelper  = new EventHelper(reactContext);
   }
 
   @ReactProp(name = "progressBarStyle")
