@@ -1,7 +1,7 @@
 {
   "name": "@react-native-csj/shared",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "广告插件共享库",
   "main": "./lib/index.js",
   "type": "module",
   "types": "./lib/index.d.ts",
@@ -19,6 +19,10 @@
     "lib",
     "src"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blacksharksjc/react-native-csj.git"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"

@@ -35,13 +35,16 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/blacksharksjc/rn-csj-ad",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blacksharksjc/react-native-csj.git"
+  },
   "author": "Jason Chan <blacksharksjc@163.com> (https://github.com/blacksharksjc)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/blacksharksjc/rn-csj-ad/issues"
+    "url": "https://github.com/blacksharksjc/react-native-csj/issues"
   },
-  "homepage": "https://github.com/blacksharksjc/rn-csj-ad#readme",
+  "homepage": "https://github.com/blacksharksjc/react-native-csj#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"

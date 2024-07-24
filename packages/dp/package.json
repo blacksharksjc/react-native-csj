@@ -35,7 +35,10 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/blacksharksjc/rn-csj-dp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blacksharksjc/react-native-csj.git"
+  },
   "author": "Jason Chan <blacksharksjc@163.com> (https://github.com/blacksharksjc)",
   "license": "MIT",
   "bugs": {
